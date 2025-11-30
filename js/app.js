@@ -1044,16 +1044,6 @@ class ClippyAI {
         helpText += "\n💬 <strong>Просто спросите что-нибудь, и я постараюсь помочь!</strong>";
         return helpText;
     }
-
-        // system commands
-        // helpText += "\n⚙️ <strong>Системные команды:</strong>\n";
-        // helpText += `• "Сверни все окна"\n`;
-        // helpText += `• "Закрой все окна"\n`;
-
-        helpText += "\n💬 <strong>Просто спросите что-нибудь, и я постараюсь помочь!</strong>";
-
-        return helpText;
-    }
 }
 
 // global variable for Clippy
