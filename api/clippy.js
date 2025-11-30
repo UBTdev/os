@@ -1,7 +1,8 @@
-// api/clippy.js - ТЕСТОВАЯ ВЕРСИЯ
+// api/clippy.js - РАБОЧАЯ ВЕРСИЯ С GEMINI
 export default async function handler(req, res) {
-  console.log('=== TEST CLIPPY API ===');
+  console.log('=== CLIPPY API CALLED ===');
   
+  // Разрешаем CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -16,17 +17,82 @@ export default async function handler(req, res) {
 
   try {
     const { question } = req.body;
+    console.log('Received question:', question);
     
-    // ПРОСТОЙ ОТВЕТ ДЛЯ ТЕСТА
-    const testAnswer = `[clip] Тестовый ответ! Ваш вопрос: "${question}". API работает!`;
+    if (!question) {
+      return res.status(400).json({ error: 'Question is required' });
+    }
+
+    // ПРАВИЛЬНОЕ ИМЯ ПЕРЕМЕННОЙ ОКРУЖЕНИЯ
+    const apiKey = process.env.GEMINI_API_KEY;
+    console.log('API Key exists:', !!apiKey);
     
-    console.log('Returning test answer');
-    return res.status(200).json({ answer: testAnswer });
+    if (!apiKey) {
+      console.log('API key missing in environment');
+      return res.status(500).json({ error: 'API key not configured' });
+    }
+
+    console.log('Making request to Gemini API...');
+    
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `Ты - Скрепка из Microsoft Office 97. Ты немного наивная, энергичная и очень любишь помогать. 
+Используй фразы вроде "Похоже, вы пишете письмо!", "Ой-ой!", "Могу я помочь?". 
+Отвечай кратко - 1-2 предложения. Всегда начинай ответ с "[clip]". 
+Говори только на русском.
+
+Вопрос пользователя: ${question}`
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 150
+          }
+        })
+      }
+    );
+
+    console.log('Gemini API status:', geminiResponse.status);
+    
+    if (!geminiResponse.ok) {
+      const errorText = await geminiResponse.text();
+      console.error('Gemini API error:', errorText);
+      return res.status(500).json({ 
+        error: 'Gemini API error',
+        details: errorText
+      });
+    }
+
+    const data = await geminiResponse.json();
+    console.log('Gemini response data:', data);
+    
+    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+      throw new Error('Invalid response format from Gemini');
+    }
+
+    let text = data.candidates[0].content.parts[0].text;
+    console.log('Original Gemini response:', text);
+
+    // Убедимся, что ответ начинается с [clip]
+    if (!text.startsWith('[clip]')) {
+      text = '[clip] ' + text;
+    }
+
+    console.log('Final answer:', text);
+    return res.status(200).json({ answer: text });
     
   } catch (error) {
-    console.error('Error:', error);
+    console.error('CLIPPY API ERROR:', error);
     return res.status(500).json({ 
-      error: 'Test error',
+      error: 'Internal server error',
       message: error.message
     });
   }
