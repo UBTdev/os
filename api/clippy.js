@@ -1,5 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
+// api/clippy.js
 export default async function handler(req, res) {
   // Разрешаем CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,10 +22,15 @@ export default async function handler(req, res) {
 
     // Получаем API ключ из environment variables
     const apiKey = process.env.GEMINI_API_KEY;
+    console.log('API Key exists:', !!apiKey); // Логируем наличие ключа
+    
     if (!apiKey) {
-      return res.status(500).json({ error: 'API key not configured' });
+      return res.status(500).json({ error: 'API key not configured in environment variables' });
     }
 
+    // Динамический импорт для совместимости
+    const { GoogleGenerativeAI } = await import('@google/generative-ai');
+    
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
@@ -34,6 +38,7 @@ export default async function handler(req, res) {
 
 Вопрос пользователя: ${question}`;
 
+    console.log('Sending request to Gemini API...');
     const result = await model.generateContent(prompt);
     const response = await result.response;
     let text = response.text();
@@ -43,14 +48,17 @@ export default async function handler(req, res) {
       text = '[clip] ' + text;
     }
 
-    console.log('AI Response success');
+    console.log('AI Response success:', text.substring(0, 50) + '...');
     return res.status(200).json({ answer: text });
     
   } catch (error) {
     console.error('AI Error:', error.message);
+    console.error('Error stack:', error.stack);
+    
     return res.status(500).json({ 
       error: 'AI service unavailable',
-      message: error.message 
+      message: error.message,
+      details: 'Check Vercel logs for more information'
     });
   }
 }
