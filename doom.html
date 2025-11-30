@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8" />
+  <title>DOOM — iframe</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/fonts.css">
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Microsoft Sans Serif', sans-serif;
+    }
+
+
+    .frame {
+      width: 100%;
+      height: 100%;
+      border: 4px solid #222;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    }
+
+
+    iframe:fullscreen {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+
+    iframe:-webkit-full-screen {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    iframe:-moz-full-screen {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .doom__game-info {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: auto;
+      background-color: rgba(0, 0, 0, 0.096);
+      display: flex;
+      z-index: 10;
+    }
+
+    .doom__game-name {
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      padding: 20px 0;
+    }
+  </style>
+</head>
+
+<body class="body">
+
+  <iframe class="frame" src="https://ustymukhman.github.io/webDOOM/public/" frameborder="0" allow="fullscreen"
+    scrolling="no">
+    <!-- <style>
+            canvas {
+              width: 100% !important;
+            }
+          </style> -->
+
+  </iframe>
+  <!-- <div class="doom__game-info">
+    <div class="doom__game-name"><span>DOOM PART 1</span></div>
+    <div class="doom__game-name"><span>DOOM PART 2</span></div>
+  </div> -->
+  <script>
+
+  </script>
+</body>
+
+</html>

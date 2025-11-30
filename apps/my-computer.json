@@ -1,0 +1,7 @@
+{
+  "title": "Мой компьютер",
+  "icon": "img/icons/computer_2_cool-4.png",
+  "width": 460,
+  "height": 380,
+  "content": "<div class='computer__disk-drives'>Дисководы:<br><br>C:\\ Системный диск <strong>1.2 GB</strong> свободно<br>D:\\ Игры <strong>800 MB</strong> свободно<br>E:\\ CD-ROM <em>(диск вставлен)</em></div>"
+}

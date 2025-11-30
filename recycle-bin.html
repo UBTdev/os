@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"> -->
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/apps/folders.css">
+  <link rel="stylesheet" href="./css/apps/recycle-bin.css">
+  <title>Корзина</title>
+</head>
+
+<body style="overflow: hidden;">
+  <div class="ie-window">
+    <div class="menu-bar ie-bar">
+      <div class="menu-item gui-btn" data-menu="file">
+        Файл
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Новая папка</div>
+          <div class="dropdown-item">Открыть</div>
+          <div class="dropdown-item">Сохранить как...</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Свойства</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Выход</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="edit">
+        Правка
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Вырезать</div>
+          <div class="dropdown-item">Копировать</div>
+          <div class="dropdown-item">Вставить</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Выделить все</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="view">
+        Вид
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Крупные значки</div>
+          <div class="dropdown-item">Мелкие значки</div>
+          <div class="dropdown-item">Список</div>
+          <div class="dropdown-item">Таблица</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Обновить</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="favorites">
+        Избранное
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Добавить в избранное...</div>
+          <div class="dropdown-item">Упорядочить избранное...</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="tools">
+        Сервис
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Найти файлы</div>
+          <div class="dropdown-item">Свойства папки</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="help">
+        Справка
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Содержание и указатель</div>
+          <div class="dropdown-item">О программе</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar ie-bar">
+      <div class="toolbar-button gui-btn" id="back-btn"><img src="./img/icons/right-arrow.png"
+          style="transform: rotate(180deg);" alt=""></div>
+      <div class="toolbar-button gui-btn" id="forward-btn"><img src="./img/icons/right-arrow.png" alt=""></div>
+      <div class="toolbar-button gui-btn" id="stop-btn"><img src="./img/icons/msg_error-2.png" alt="stop"></div>
+      <div class="toolbar-button gui-btn" id="refresh-btn"><img src="./img/icons/refresh.png" alt="refresh"></div>
+      <div class="toolbar-button gui-btn" id="home-btn"><img src="./img/icons/home.png" alt="home"></div>
+      <div class="toolbar-button gui-btn" id="search-btn"><img src="./img/icons/world-5.png" alt="Search"></div>
+      <div class="toolbar-button gui-btn" id="favorites-btn"><img src="./img/icons/world_star-1.png" alt="favorites">
+      </div>
+      <div class="toolbar-button gui-btn" id="print-btn"><img src="./img/icons/printer_slim-1.png" alt="printer"></div>
+    </div>
+
+    <div class="address-bar ie-bar">
+      <div class="address-label">Адрес:</div>
+      <input type="text" class="address-input" id="address-input" value="C:\Корзина\">
+    </div>
+
+    <div class="content-area ie-bar">
+      <div class="photo-grid" id="photo-grid">
+        <!-- Фотографии будут добавлены через JavaScript -->
+      </div>
+    </div>
+
+    <div class="status-bar ie-bar">
+      <div class="status-text" id="status-text">Выбрано объектов: 0</div>
+      <div class="status-indicator">Фото 2020-2025</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <script>
+    // Данные фотографий с реальными URL для демонстрации
+    const photos = [
+      { id: 1, name: "Жизнь в кредит", description: "Жизнь в кредит", href: "./img/img-folder-app/5222217930702439830.jpg" },
+      { id: 2, name: "Твои старые дедлайны", description: "Твои старые дедлайны", href: "./img/icons/html-2.png" },
+      { id: 3, name: "BitrixDocumentation.TXT", description: "BitrixDocumentation.TXT", href: "./img/icons/accessibility-4.png" },
+      { id: 4, name: "STEAM", description: "STEAM", href: "./img/icons/directory_closed-4.png" },
+      { id: 5, name: "CS:GO.exe", description: "CS:GO.exe", href: "./img/icons/f9e2270a84c5a14c77836f5ed85d24a8.jpg" },
+      { id: 6, name: "Список Займодавцев.TXT", description: "Список Займодавцев.TXT", href: "./img/icons/notepad_file-2.png" }
+    ];
+
+    // Элементы DOM
+    const photoGrid = document.getElementById('photo-grid');
+    const addressInput = document.getElementById('address-input');
+    const statusText = document.getElementById('status-text');
+    const refreshBtn = document.getElementById('refresh-btn');
+    const backBtn = document.getElementById('back-btn');
+    const forwardBtn = document.getElementById('forward-btn');
+    const homeBtn = document.getElementById('home-btn');
+
+    let selectedPhotos = [];
+
+    // Инициализация GLightbox с элементами галереи
+    const lightbox = GLightbox({
+      touchNavigation: true,
+      loop: true,
+      autoplayVideos: false
+    });
+
+    // Функция для отображения фотографий
+    function renderPhotos() {
+      photoGrid.innerHTML = '';
+
+      photos.forEach(photo => {
+        const photoItem = document.createElement('div');
+        photoItem.className = 'photo-item';
+        photoItem.dataset.id = photo.id;
+
+        // Создаем миниатюру для фотографии
+        const thumbnail = document.createElement('img');
+        thumbnail.className = 'icon';
+        thumbnail.src = photo.href; // Используем тот же URL что и для полноразмерного
+        thumbnail.alt = photo.description;
+
+        const photoName = document.createElement('div');
+        photoName.className = 'photo-name';
+        photoName.textContent = photo.name;
+
+        photoItem.appendChild(thumbnail);
+        photoItem.appendChild(photoName);
+
+        // Обработчик выбора фотографии
+        photoItem.addEventListener('click', (e) => {
+          if (e.ctrlKey) {
+            // Множественный выбор с Ctrl
+            const index = selectedPhotos.indexOf(photo.id);
+            if (index > -1) {
+              selectedPhotos.splice(index, 1);
+              photoItem.classList.remove('selected');
+            } else {
+              selectedPhotos.push(photo.id);
+              photoItem.classList.add('selected');
+            }
+          } else {
+            // Одиночный выбор
+            document.querySelectorAll('.photo-item').forEach(item => {
+              item.classList.remove('selected');
+            });
+            selectedPhotos = [photo.id];
+            photoItem.classList.add('selected');
+          }
+
+          updateStatus();
+        });
+
+        // Двойной клик для открытия фотографии в lightbox
+        // photoItem.addEventListener('dblclick', () => {
+        //   statusText.textContent = `Открытие: ${photo.name}`;
+
+        //   // Создаем элементы галереи для GLightbox
+        //   const galleryItems = photos.map(p => ({
+        //     href: p.href, // Используем тот же URL что и для миниатюр
+        //     type: 'image',
+        //     title: p.description,
+        //     // description: `Файл: ${p.name}`
+        //   }));
+
+        //   // Находим индекс текущей фотографии
+        //   const currentIndex = photos.findIndex(p => p.id === photo.id);
+
+        //   // Открываем lightbox на текущем элементе
+        //   lightbox.setElements(galleryItems);
+        //   lightbox.openAt(currentIndex);
+        // });
+
+        photoGrid.appendChild(photoItem);
+      });
+
+      updateStatus();
+    }
+
+    // Обновление статусной строки
+    function updateStatus() {
+      statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+    }
+
+    // Обработчики кнопок
+    refreshBtn.addEventListener('click', function () {
+      statusText.textContent = 'Обновление...';
+      setTimeout(() => {
+        renderPhotos();
+        statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+      }, 500);
+    });
+
+    backBtn.addEventListener('click', function () {
+      statusText.textContent = 'Назад...';
+      setTimeout(() => {
+        statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+      }, 500);
+    });
+
+    forwardBtn.addEventListener('click', function () {
+      statusText.textContent = 'Вперед...';
+      setTimeout(() => {
+        statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+      }, 500);
+    });
+
+    homeBtn.addEventListener('click', function () {
+      statusText.textContent = 'Переход в домашнюю папку...';
+      addressInput.value = 'C:\\Корзина\\';
+      setTimeout(() => {
+        statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+      }, 500);
+    });
+
+    // Обработка ввода адреса
+    addressInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        statusText.textContent = 'Переход по адресу...';
+        setTimeout(() => {
+          statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+        }, 500);
+      }
+    });
+
+    // Обработчики для выпадающих меню
+    const menuItems = document.querySelectorAll('.menu-item');
+
+    menuItems.forEach(item => {
+      item.addEventListener('mouseenter', function () {
+        // Закрываем другие открытые меню
+        menuItems.forEach(otherItem => {
+          if (otherItem !== this) {
+            otherItem.classList.remove('active');
+          }
+        });
+        // Открываем текущее меню
+        this.classList.add('active');
+      });
+
+      item.addEventListener('mouseleave', function (e) {
+        // Закрываем меню только если курсор ушел за его пределы
+        setTimeout(() => {
+          if (!this.matches(':hover') && !this.querySelector('.dropdown-menu').matches(':hover')) {
+            this.classList.remove('active');
+          }
+        }, 100);
+      });
+    });
+
+    // Обработчики для элементов выпадающих меню
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function () {
+        const menuText = this.textContent;
+        statusText.textContent = `Выбрано: ${menuText}`;
+
+        // Закрываем все меню после выбора
+        menuItems.forEach(menuItem => {
+          menuItem.classList.remove('active');
+        });
+
+        // Обработка конкретных пунктов меню
+        if (menuText === 'Выход') {
+          if (confirm('Закрыть обозреватель?')) {
+            document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;color:white;font-family:Arial;">Обозреватель закрыт</div>';
+          }
+        } else if (menuText === 'Обновить') {
+          refreshBtn.click();
+        } else if (menuText === 'Крупные значки') {
+          document.querySelector('.photo-grid').style.gridTemplateColumns = 'repeat(auto-fill, 200px, 200px)';
+        } else if (menuText === 'Мелкие значки') {
+          document.querySelector('.photo-grid').style.gridTemplateColumns = 'repeat(auto-fill, 120px, 120px)';
+        }
+      });
+    });
+
+    // Инициализация
+    renderPhotos();
+  </script>
+  <!-- grid-template-columns: repeat(auto-fill, 70px);
+  grid-template-rows: repeat(7, 80px);
+  grid-auto-flow: column; -->
+</body>
+
+</html>

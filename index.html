@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/icons/sys-icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/fonts.css">
+
+    <title>ArokenOS '98</title>
+</head>
+
+<!-- <a href='https://t.me/VLADIMIRNABOKOV' target='_blank'>KHRUSHCHEV</a> -->
+
+<body class="body">
+    <!-- ПРЕЛОАДЕР WINDOWS 98 -->
+    <div id="win98-bootloader">
+        <div class="boot-logo">
+            <img src="./video/5431421093291344063-unscreen.gif" alt="ArokenOS '98 Logo">
+        </div>
+
+        <div class="boot-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text">Запуск <span id="OS-Name"></span><span class="dots"></span></div>
+        </div>
+
+        <div class="boot-footer">
+            <div>© 2025 KHRUSHCHEV Corporation. Все дедлайны защищены.</div>
+            <div>BIOS v0.98 • 640 КБ ОЗУ • IDE диск 1.2 ГБ</div>
+        </div>
+    </div>
+    <div class="desktop">
+        <div class="desktop__grid">
+            <!-- Desktop Icons -->
+            <div class="desktop-icon my-computer" id="desktop-icon" data-app="my-computer">
+                <div><img class="desktop-icon__img" src="./img/icons/computer_2_cool-4.png" alt="my-computer"></div>
+                <div class="icon-title">Мой компьютер</div>
+            </div>
+
+            <div class="desktop-icon recycle-bin" id="desktop-icon" data-app="recycle-bin">
+                <div><img class="desktop-icon__img" src="./img/icons/recycle_bin_empty-4.png" alt="my-computer"></div>
+                <div class="icon-title">Корзина</div>
+            </div>
+
+            <div class="desktop-icon notepad" id="desktop-icon" data-app="notepad">
+                <div><img class="desktop-icon__img" src="./img/icons/notepad-32x32.png" alt="my-computer"></div>
+                <div class="icon-title">Блокнот</div>
+            </div>
+            <div class="desktop-icon gallery-folder" id="desktop-icon" data-app="gallery-folder">
+                <div><img class="desktop-icon__img" src="./img/icons/directory_open_file_mydocs-4.png"
+                        alt="gallery floder"></div>
+                <div class="icon-title">Фото 2020-2025</div>
+            </div>
+            <div class="desktop-icon music-folder" id="desktop-icon">
+                <div><img class="desktop-icon__img desktop__audio-icon" src="./img/icons/music-icon.png"
+                        alt="music-folder"></div>
+                <audio class="desktop-audio" src="./audio/Ailow - Godless [NCS Release].mp3"></audio>
+                <div class="icon-title">Ailow - Godless [NCS Release].mp3</div>
+            </div>
+            <div class="desktop-icon music-folder" id="desktop-icon">
+                <div><img class="desktop-icon__img desktop__audio-icon" src="./img/icons/music-icon.png"
+                        alt="music-folder"></div>
+                <audio class="desktop-audio" src="./audio/DIECXLD, Prod.94 - flowers in my head [NCS Release].mp3"></audio>
+                <div class="icon-title">DIECXLD, Prod.94 - flowers in my head [NCS Release].mp3</div>
+            </div>
+            <div class="desktop-icon music-folder" id="desktop-icon">
+                <div><img class="desktop-icon__img desktop__audio-icon" src="./img/icons/music-icon.png"
+                        alt="music-folder"></div>
+                <audio class="desktop-audio" src="./audio/criticaleye, SHIRO, EVILDXER - Shadows [NCS Release].mp3"></audio>
+                <div class="icon-title">criticaleye, SHIRO, EVILDXER - Shadows [NCS Release].mp3</div>
+            </div>
+            <div class="desktop-icon live-on-credit" id="desktop-icon" data-app="live-on-credit">
+                <div><img class="desktop-icon__img" src="./img/icons/L-icon64.png" alt="live-on-credit"></div>
+                <div class="icon-title">Жизнь в кредит Deluxe Edition</div>
+            </div>
+            <div class="desktop-icon freelance" id="desktop-icon" data-app="freelance-simulator">
+                <div><img class="desktop-icon__img" src="./img/icons/Letter_F_orange_35008.png"
+                        alt="freelance-simulator">
+                </div>
+                <div class="icon-title">FREELANCE CLICKER</div>
+            </div>
+            <div class="desktop-icon internet-explorer" id="desktop-icon" data-app="internet-explorer">
+                <div><img class="desktop-icon__img" src="./img/icons/msie1-0.png" alt="internet-explorer"></div>
+                <div class="icon-title">Internet Explorer</div>
+            </div>
+            <div class="desktop-icon minecraft" id="desktop-icon" data-app="minecraft">
+                <div><img class="desktop-icon__img" src="./img/icons/minecraft.png" alt="Arocraft launcher - indev">
+                </div>
+                <div class="icon-title">Arocraft launcher - indev</div>
+            </div>
+            <div class="desktop-icon doom" id="desktop-icon" data-app="doom">
+                <div><img class="desktop-icon__img" src="./img/icons/doomIcon.png" alt="doom"></div>
+                <div class="icon-title">DOOM.EXE</div>
+            </div>
+
+            <!-- Add info btn -->
+            <button class="additional-btn info-btn" onclick="ArokenOS.openApp('about')"><img
+                    src="./img/icons/msg_information-2.png"></button>
+            <button class="additional-btn donate-btn" onclick="ArokenOS.openApp('support')"><img
+                    src="./img/icons/coin.png"><span>Поддержать</span></button>
+        </div>
+        <!-- task panel+-->
+        <div class="start-bar">
+            <div class="start-bar__alert-line">
+                <div class="master-volume__help-alert" onclick="volumeHelpAlertClose()">
+                    <div class="control-btn close-btn">×</div>
+                    <img src="./img/icons/msg_information-2.png" alt="information icon">
+                    <p>Чтобы управлять громкостью звука в <span id="OS-Name"></span>, наведите курсор на значок
+                        динамика, или
+                        кликните. Изменение звука может не работать в приложениях с самостоятельной регулировкой.
+                    </p>
+                </div>
+            </div>
+            <button class="start-btn taskbar-btn" onclick="toggleStartMenu()">
+                <div><img src="./img/icons/windows-4.png" alt="start icon"></div>
+                Start
+            </button>
+            <div class="taskbar-apps" id="taskbarApps">
+                <!-- Сюда будут добавляться открытые приложения -->
+            </div>
+            <div class="clock" style="position: relative;" id="master-volume">
+                <div class="master-volume-control">
+                    <div class="master-volume-control__inner">
+                        <input type="range" id="masterVolume" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <!-- <p>MASTER Volume:</p> -->
+                </div>
+                <div class="master-volume" onclick="toggleVolumeControl()">
+                    <img src="./img/icons/audio-okay-16x16.png" alt="volume-btn-icon">
+                </div>
+                <div id="clock">12:00 PM</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- start menu -->
+    <div class="start-menu" id="startMenu">
+        <div class="start-menu-header">
+
+            <div class="start-menu-title"><span id="OS-Name"></span></div>
+        </div>
+        <div class="start-menu-body">
+            <div class="start-menu-left">
+                <div class="menu-section">
+                    <div class="menu-item" id="desktop-icon" data-app="internet-explorer">
+                        <div><img class="desktop-icon__img" src="./img/icons/msie1-0.png" alt="internet-explorer"></div>
+                        <div>Браузер</div>
+                    </div>
+                </div>
+                <div class="menu-divider"></div>
+                <div class="menu-section">
+                    <div class="menu-item" id="desktop-icon" data-app="my-computer">
+                        <div><img class="desktop-icon__img" src="./img/icons/computer_2_cool-4.png" alt="my-computer">
+                        </div>
+                        <div>Мой компьютер</div>
+                    </div>
+
+                    <div class="menu-item" id="desktop-icon" data-app="doom">
+                        <div><img class="desktop-icon__img" src="./img/icons/doomIcon.png" alt="doom"></div>
+                        <div>DOOM.EXE</div>
+                    </div>
+                    <div class="menu-item" id="desktop-icon" data-app="freelance-simulator">
+                        <div><img class="desktop-icon__img" src="./img/icons/Letter_F_orange_35008.png"
+                                alt="freelance-simulator">
+                        </div>
+                        <div>FREELANCE Simulator</div>
+                    </div>
+                    <div class="menu-item" id="desktop-icon" data-app="live-on-credit">
+                        <div><img class="desktop-icon__img" src="./img/icons/L-icon64.png" alt="live-on-credit"></div>
+                        <div>Жизнь в кредит Deluxe Edition</div>
+                    </div>
+
+                    <!-- <div class="menu-item">
+                        <div>▶</div>
+                        <div>Выполнить...</div>
+                    </div> -->
+                    <div class="menu-item" onclick="ArokenOS.openApp('about')">
+                        <div><img src="./img/icons/msg_information-2.png"></div>
+                        <div>Справка</div>
+                    </div>
+                    <div class="menu-item" onclick="ArokenOS.openApp('support')">
+                        <div><img src="./img/icons/coin.png"></div>
+                        <div>Поддержать</div>
+                    </div>
+
+                </div>
+
+                <div class="menu-divider"></div>
+
+                <div class="menu-section">
+                    <div class="menu-item" id="desktop-icon" data-app="notepad">
+                        <div><img class="start-menu-icon" src="./img/icons/notepad-32x32.png" alt="my-computer"></div>
+                        <div>Блокнот</div>
+                    </div>
+                    <!-- <div class="menu-item">
+                        <div>🧮</div>
+                        <div>Калькулятор</div>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="start-menu-right">
+                <div class="menu-section">
+                    <div class="menu-section-title">Избранное</div>
+                    <div class="menu-item" id="desktop-icon" data-app="my-computer">
+                        <div><img class="desktop-icon__img" src="./img/icons/computer_2_cool-4.png" alt="my-computer">
+                        </div>
+                        <div>Мой компьютер</div>
+                    </div>
+                    <!-- <div class="menu-item">
+                        <div>🖼️</div>
+                        <div>Мои рисунки</div>
+                    </div> -->
+                    <!-- <div class="menu-item">
+                        <div>🎵</div>
+                        <div>Моя музыка</div>
+                    </div> -->
+                </div>
+
+                <div class="menu-divider"></div>
+
+                <div class="menu-section">
+                    <div class="menu-item shutdown-item" id="shutdown-btn">
+                        <div><img src="./img/icons/power-on.png" alt="power-on"></div>
+                        <div>Завершение работы...</div>
+                    </div>
+                    <div class="menu-item reboot-item" id="reboot-btn">
+                        <div><img src="./img/icons/refresh.png" alt="refresh"></div>
+                        <div>Перезагрузка</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- clippy AI -->
+
+    <div id="clippy-container">
+        <div id="clippy-window">
+            <div class="clippy-title">Скрепка AI — помощник (alpha 1.0.1)</div>
+            <div id="clippy-chat"></div>
+            <div class="clippy-input-area">
+                <input type="text" id="clippy-input" placeholder="Спросить у Скрепки..." autocomplete="off">
+                <button onclick="talkToClippy()">Отправить</button>
+            </div>
+        </div>
+        <!-- Добавьте этот код в index.html где-нибудь в конце body -->
+        <div id="music-player" class="music-player">
+            <div class="music-player__header">
+                <span class="music-player__title">Музыкальный плеер</span>
+                
+                <button class="music-player__close" onclick="MusicPlayer.close()">×</button>
+            </div>
+            <div class="music-player__content">
+                <div class="music-player__track-info">
+                    <div class="music-player__track-name" id="current-track">Выберите трек</div>
+                    <div class="music-player__track-time" id="track-time">00:00 / 00:00</div>
+                </div>
+                <div class="music-player__controls">
+                    <button class="music-player__btn prev" onclick="MusicPlayer.previous()"></button>
+                    <button class="music-player__btn" onclick="MusicPlayer.playPause()"></button>
+                    <button class="music-player__btn next" onclick="MusicPlayer.next()"></button>
+                    <input type="range" id="volume-slider" class="music-player__volume" min="0" max="100" value="50"
+                        onchange="MusicPlayer.setVolume(this.value)">
+                </div>
+                <div class="music-player__progress">
+                    <input type="range" id="progress-bar" class="music-player__progress-bar" min="0" max="100" value="0"
+                        onchange="MusicPlayer.seek(this.value)">
+                </div>
+            </div>
+        </div>
+
+        <!-- Сама Скрепка (анимированная gif) -->
+        <img src="./img/clippy/clippyChill.gif" id="clippy-agent" alt="Скрепка" title="Нажми на меня!">
+    </div>
+
+    <audio src="./audio/systemSounds/microsoft-windows-98-startup.mp3" id="system-audio" style="display: none;"></audio>
+    <script src="./js/app.js"></script>
+    <script src="./js/masterSoundVolume.js"></script>
+    <script src="./js/start-menu.js"></script>
+    <!-- <script src="./js/clippyAI.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+    <!-- <script src="./js/main.js"></script> -->
+    <script>    const lightbox = GLightbox();</script>
+</body>
+
+</html>

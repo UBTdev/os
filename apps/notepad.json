@@ -1,0 +1,7 @@
+{
+  "title": "Новый документ  -  Блокнот",
+  "icon": "img/icons/notepad-32x32.png",
+  "width": 520,
+  "height": 440,
+  "content": "<div class='prograb-white__inner'><textarea class='document__text-area' autofocus block></textarea></div>"
+}

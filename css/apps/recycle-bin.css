@@ -1,0 +1,22 @@
+.photo-grid {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 1px;
+}
+
+.photo-item {
+  display: flex;
+  flex-direction: row;
+  text-wrap: nowrap;
+  padding: 2px;
+  gap: 10px;
+}
+
+.photo-item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0px;
+}
+.icon {
+  border: none;
+}

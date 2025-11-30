@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/apps/folders.css">
+  <title>Фотографии - Microsoft Internet Explorer 5.0</title>
+</head>
+
+<body style="overflow: hidden;">
+  <div class="ie-window">
+    <div class="menu-bar ie-bar">
+      <div class="menu-item gui-btn" data-menu="file">
+        Файл
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Новая папка</div>
+          <div class="dropdown-item">Открыть</div>
+          <div class="dropdown-item">Сохранить как...</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Свойства</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Выход</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="edit">
+        Правка
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Вырезать</div>
+          <div class="dropdown-item">Копировать</div>
+          <div class="dropdown-item">Вставить</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Выделить все</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="view">
+        Вид
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Крупные значки</div>
+          <div class="dropdown-item">Мелкие значки</div>
+          <div class="dropdown-item">Список</div>
+          <div class="dropdown-item">Таблица</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Обновить</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="favorites">
+        Избранное
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Добавить в избранное...</div>
+          <div class="dropdown-item">Упорядочить избранное...</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="tools">
+        Сервис
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Найти файлы</div>
+          <div class="dropdown-item">Свойства папки</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="help">
+        Справка
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Содержание и указатель</div>
+          <div class="dropdown-item">О программе</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar ie-bar">
+      <div class="toolbar-button gui-btn" id="back-btn"><img src="./img/icons/right-arrow.png"
+          style="transform: rotate(180deg);" alt=""></div>
+      <div class="toolbar-button gui-btn" id="forward-btn"><img src="./img/icons/right-arrow.png" alt=""></div>
+      <div class="toolbar-button gui-btn" id="stop-btn"><img src="./img/icons/msg_error-2.png" alt="stop"></div>
+      <div class="toolbar-button gui-btn" id="refresh-btn"><img src="./img/icons/refresh.png" alt="refresh"></div>
+      <div class="toolbar-button gui-btn" id="home-btn"><img src="./img/icons/home.png" alt="home"></div>
+      <div class="toolbar-button gui-btn" id="search-btn"><img src="./img/icons/world-5.png" alt="Search"></div>
+      <div class="toolbar-button gui-btn" id="favorites-btn"><img src="./img/icons/world_star-1.png" alt="favorites">
+      </div>
+      <div class="toolbar-button gui-btn" id="print-btn"><img src="./img/icons/printer_slim-1.png" alt="printer"></div>
+    </div>
+
+    <div class="address-bar ie-bar">
+      <div class="address-label">Адрес:</div>
+      <input type="text" class="address-input" id="address-input" value="C:\Мои документы\Фото 2020-2025">
+    </div>
+
+    <div class="content-area ie-bar">
+      <div class="photo-grid" id="photo-grid">
+        <!-- Фотографии будут добавлены через JavaScript -->
+      </div>
+    </div>
+
+    <div class="status-bar ie-bar">
+      <div class="status-text" id="status-text">Выбрано объектов: 0</div>
+      <div class="status-indicator">Фото 2020-2025</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <script>
+    // Данные фотографий с реальными URL для демонстрации
+    const photos = [
+      { id: 1, name: "Новая платформа", description: "Новая платформа", href: "./img/img-folder-app/5438206905395838482.jpg" },
+      { id: 2, name: "Дебаты АйТишные-3", description: "Дебаты АйТишные-3", href: "./img/img-folder-app/5354842002497334724.jpg" },
+      { id: 3, name: "Дебаты АйТишные-2", description: "Дебаты АйТишные-2", href: "./img/img-folder-app/5353039486327581846.jpg" },
+      { id: 4, name: "Дебаты АйТишные-1", description: "Дебаты АйТишные-1", href: "./img/img-folder-app/5354842002497334727.jpg" },
+      { id: 5, name: "Подкаст с будущим куратором", description: "Подкаст с будущим куратором", href: "./img/img-folder-app/5339226824259006411.jpg" },
+      { id: 6, name: "2 Фронтендера", description: "2 Фронтендера", href: "./img/img-folder-app/5246879216304253991.jpg" },
+      { id: 7, name: "Розыгрыш", description: "Розыгрыш", href: "./img/img-folder-app/5447229536468069908.jpg" },
+      { id: 8, name: "Подкаст с Владиленом", description: "Подкаст с Владиленом", href: "./img/img-folder-app/5323551022557290277.jpg" },
+      { id: 9, name: "ТЕМНАЯ ТЕМА", description: "ТЕМНАЯ ТЕМА", href: "./img/img-folder-app/5391198273592746161.jpg" },
+      { id: 10, name: "БОЮСЬ ВЫГОРЕТЬ", description: "БОЮСЬ ВЫГОРЕТЬ", href: "./img/img-folder-app/5233666724375682078.jpg" },
+      { id: 11, name: "Тест драйв", description: "Тест драйв", href: "./img/img-folder-app/5463164264568183910.jpg" },
+      { id: 12, name: "Пилотный подкаст", description: "Пилотный подкаст", href: "./img/img-folder-app/5420340958135964588.jpg" },
+      { id: 13, name: "Обновленный модуль", description: "Обновленный модуль", href: "./img/img-folder-app/5395742537970472200.jpg" },
+      { id: 14, name: "1.000.000 просмотров", description: "1.000.000 просмотров", href: "./img/img-folder-app/5402586632781156166.jpg" },
+      { id: 15, name: "новогодние подарки", description: "новогодние подарки", href: "./img/img-folder-app/5224622068711150592.jpg" },
+      { id: 16, name: "конкурс", description: "конкурс", href: "./img/img-folder-app/5224622068711150593.jpg" },
+      { id: 17, name: "Евгений: Про Веб-разработку", description: "Евгений: Про Веб-разработку", href: "./img/img-folder-app/5440620861699773203.jpg" },
+      { id: 18, name: "😎На связи команда Арокен.ру", description: "😎На связи команда Арокен.ру", href: "./img/img-folder-app/5377350324072861450.jpg" },
+      { id: 19, name: "Прокрастинация", description: "Прокрастинация", href: "./img/img-folder-app/5371044238340511991.jpg" },
+      { id: 20, name: "Push-уведомления на JS!", description: "Push-уведомления на JS!", href: "./img/img-folder-app/5312235639158200512.jpg" },
+      { id: 21, name: "Главная ошибка фрилансера", description: "Главная ошибка фрилансера", href: "./img/img-folder-app/5285375064012869518.jpg" },
+      { id: 22, name: "С обновлением меня:", description: "С обновлением меня:", href: "./img/img-folder-app/5426945707304143519.jpg" },
+      { id: 23, name: "Придумайте подпись", description: "Придумайте подпись", href: "./img/img-folder-app/5427020671663324340.jpg" },
+      { id: 24, name: "Ностальгии-стрим", description: "Ностальгии-стрим", href: "./img/img-folder-app/5222217930702439830.jpg" },
+      { id: 25, name: "Сегодня работали...", description: "Сегодня работали...", href: "./img/img-folder-app/5201739483685440395.jpg" },
+      { id: 26, name: "Новое видео", description: "Новое видео", href: "./img/img-folder-app/5445150295555426406.jpg" },
+      { id: 27, name: "5 востребованных профессий", description: "5 востребованных профессий", href: "./img/img-folder-app/5301095898446677155.jpg" },
+      { id: 28, name: "Забрали работать в офис?", description: "Забрали работать в офис?", href: "./img/img-folder-app/5472018163555221704.jpg" },
+      { id: 29, name: "Этот чувак появится на ютубе", description: "Этот чувак появится на ютубе", href: "./img/img-folder-app/5323678286733228113.jpg" },
+      { id: 30, name: "Красивый телефон", description: "Красивый телефон", href: "./img/img-folder-app/5242664547716806692.jpg" },
+      { id: 31, name: "ОЗАРЕНИЕ: ФРИЛАНС", description: "ОЗАРЕНИЕ: ФРИЛАНС", href: "./img/img-folder-app/5222105003127320887.jpg" },
+      { id: 32, name: "Ура! Привезли компьютер и кресло", description: "Ура! Привезли компьютер и кресло", href: "./img/img-folder-app/5454068915404650440.jpg" },
+      { id: 33, name: "На днях выйдет ролик", description: "На днях выйдет ролик", href: "./img/img-folder-app/5337085375040043174.jpg" },
+      { id: 34, name: "Она сказала Да😍", description: "Она сказала Да😍", href: "./img/img-folder-app/5397728346164540048.jpg" },
+      { id: 35, name: "🤯комбо - выгодней.", description: "комбо - выгодней", href: "./img/img-folder-app/5310019397378748588.jpg" },
+      { id: 36, name: "1 год на фрилансе. Что я понял?", description: "1 год на фрилансе. Что я понял?", href: "./img/img-folder-app/5258438141528879703.jpg" },
+      { id: 37, name: "Рабочее место", description: "Рабочее место", href: "./img/img-folder-app/5422644825838170632.jpg" },
+      { id: 38, name: "699 SQUAD доведение тебя до заработка", description: "699 SQUAD доведение тебя до заработка", href: "./img/img-folder-app/5318977281818997428.jpg" },
+      { id: 39, name: "И он снят на ахуенную камеру за 100 тонн", description: "И он снят на ахуенную камеру за 100 тонн", href: "./img/img-folder-app/5204189474764992718.jpg" },
+      { id: 40, name: "Нафрилансил😎😎😎😎😎", description: "Нафрилансил😎😎😎😎😎", href: "./img/img-folder-app/5397658771989311744.jpg" },
+      { id: 41, name: "Поступил в хогвартс", description: "Поступил в хогвартс", href: "./img/img-folder-app/5397658771989311738.jpg" },
+      { id: 42, name: "Едем непонятно куда", description: "Едем непонятно куда", href: "./img/img-folder-app/5397990605457567232.jpg" },
+      { id: 43, name: "Что? Сегодня стрим в 21:00", description: "Что? Сегодня стрим в 21:00", href: "./img/img-folder-app/775438538409690346.jpg" }
+    ];
+
+    // Элементы DOM
+    const photoGrid = document.getElementById('photo-grid');
+    const addressInput = document.getElementById('address-input');
+    const statusText = document.getElementById('status-text');
+    const refreshBtn = document.getElementById('refresh-btn');
+    const backBtn = document.getElementById('back-btn');
+    const forwardBtn = document.getElementById('forward-btn');
+    const homeBtn = document.getElementById('home-btn');
+
+    let selectedPhotos = [];
+
+    // Инициализация GLightbox с элементами галереи
+    const lightbox = GLightbox({
+      touchNavigation: true,
+      loop: true,
+      autoplayVideos: false
+    });
+
+    // Функция для отображения фотографий
+    function renderPhotos() {
+      photoGrid.innerHTML = '';
+
+      photos.forEach(photo => {
+        const photoItem = document.createElement('div');
+        photoItem.className = 'photo-item';
+        photoItem.dataset.id = photo.id;
+
+        // Создаем миниатюру для фотографии
+        const thumbnail = document.createElement('img');
+        thumbnail.className = 'icon';
+        thumbnail.src = photo.href; // Используем тот же URL что и для полноразмерного
+        thumbnail.alt = photo.description;
+
+        const photoName = document.createElement('div');
+        photoName.className = 'photo-name';
+        photoName.textContent = photo.name;
+
+        photoItem.appendChild(thumbnail);
+        photoItem.appendChild(photoName);
+
+        // Обработчик выбора фотографии
+        photoItem.addEventListener('click', (e) => {
+          if (e.ctrlKey) {
+            // Множественный выбор с Ctrl
+            const index = selectedPhotos.indexOf(photo.id);
+            if (index > -1) {
+              selectedPhotos.splice(index, 1);
+              photoItem.classList.remove('selected');
+            } else {
+              selectedPhotos.push(photo.id);
+              photoItem.classList.add('selected');
+            }
+          } else {
+            // Одиночный выбор
+            document.querySelectorAll('.photo-item').forEach(item => {
+              item.classList.remove('selected');
+            });
+            selectedPhotos = [photo.id];
+            photoItem.classList.add('selected');
+          }
+
+          updateStatus();
+        });
+
+        // Двойной клик для открытия фотографии в lightbox
+        photoItem.addEventListener('dblclick', () => {
+          statusText.textContent = `Открытие: ${photo.name}`;
+
+          // Создаем элементы галереи для GLightbox
+          const galleryItems = photos.map(p => ({
+            href: p.href, // Используем тот же URL что и для миниатюр
+            type: 'image',
+            title: p.description,
+            // description: `Файл: ${p.name}`
+          }));
+
+          // Находим индекс текущей фотографии
+          const currentIndex = photos.findIndex(p => p.id === photo.id);
+
+          // Открываем lightbox на текущем элементе
+          lightbox.setElements(galleryItems);
+          lightbox.openAt(currentIndex);
+        });
+
+        photoGrid.appendChild(photoItem);
+      });
+
+      updateStatus();
+    }
+
+    // Обновление статусной строки
+    function updateStatus() {
+      statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+    }
+
+    // Обработчики кнопок
+    refreshBtn.addEventListener('click', function () {
+      statusText.textContent = 'Обновление...';
+      setTimeout(() => {
+        renderPhotos();
+        statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+      }, 500);
+    });
+
+    backBtn.addEventListener('click', function () {
+      statusText.textContent = 'Назад...';
+      setTimeout(() => {
+        statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+      }, 500);
+    });
+
+    forwardBtn.addEventListener('click', function () {
+      statusText.textContent = 'Вперед...';
+      setTimeout(() => {
+        statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+      }, 500);
+    });
+
+    homeBtn.addEventListener('click', function () {
+      statusText.textContent = 'Переход в домашнюю папку...';
+      addressInput.value = 'C:\\Мои документы\\Фотографии';
+      setTimeout(() => {
+        statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+      }, 500);
+    });
+
+    // Обработка ввода адреса
+    addressInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        statusText.textContent = 'Переход по адресу...';
+        setTimeout(() => {
+          statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
+        }, 500);
+      }
+    });
+
+    // Обработчики для выпадающих меню
+    const menuItems = document.querySelectorAll('.menu-item');
+
+    menuItems.forEach(item => {
+      item.addEventListener('mouseenter', function () {
+        // Закрываем другие открытые меню
+        menuItems.forEach(otherItem => {
+          if (otherItem !== this) {
+            otherItem.classList.remove('active');
+          }
+        });
+        // Открываем текущее меню
+        this.classList.add('active');
+      });
+
+      item.addEventListener('mouseleave', function (e) {
+        // Закрываем меню только если курсор ушел за его пределы
+        setTimeout(() => {
+          if (!this.matches(':hover') && !this.querySelector('.dropdown-menu').matches(':hover')) {
+            this.classList.remove('active');
+          }
+        }, 100);
+      });
+    });
+
+    // Обработчики для элементов выпадающих меню
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function () {
+        const menuText = this.textContent;
+        statusText.textContent = `Выбрано: ${menuText}`;
+
+        // Закрываем все меню после выбора
+        menuItems.forEach(menuItem => {
+          menuItem.classList.remove('active');
+        });
+
+        // Обработка конкретных пунктов меню
+        if (menuText === 'Выход') {
+          if (confirm('Закрыть обозреватель?')) {
+            document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;color:white;font-family:Arial;">Обозреватель закрыт</div>';
+          }
+        } else if (menuText === 'Обновить') {
+          refreshBtn.click();
+        } else if (menuText === 'Крупные значки') {
+          document.querySelector('.photo-grid').style.gridTemplateColumns = 'repeat(auto-fill, 200px, 200px)';
+        } else if (menuText === 'Мелкие значки') {
+          document.querySelector('.photo-grid').style.gridTemplateColumns = 'repeat(auto-fill, 120px, 120px)';
+        }
+      });
+    });
+
+    // Инициализация
+    renderPhotos();
+  </script>
+  <!-- grid-template-columns: repeat(auto-fill, 70px);
+  grid-template-rows: repeat(7, 80px);
+  grid-auto-flow: column; -->
+</body>
+
+</html>

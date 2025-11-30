@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/apps/IE.css">
+  <title>Microsoft Internet Explorer 5.0</title>
+</head>
+
+<body>
+  <div class="ie-window">
+    <div class="menu-bar ie-bar">
+      <div class="menu-item gui-btn" data-menu="file">
+        Файл
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Создать окно</div>
+          <div class="dropdown-item">Открыть...</div>
+          <div class="dropdown-item">Сохранить как...</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Настройка страницы...</div>
+          <div class="dropdown-item">Печать...</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Свойства</div>
+          <div class="dropdown-item">Работа в автономном режиме</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Выход</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="edit">
+        Правка
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Вырезать</div>
+          <div class="dropdown-item">Копировать</div>
+          <div class="dropdown-item">Вставить</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Выделить все</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Найти (на этой странице)...</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="view">
+        Вид
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Панели инструментов</div>
+          <div class="dropdown-item">Строка состояния</div>
+          <div class="dropdown-item">Панель ссылок</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Перейти к</div>
+          <div class="dropdown-item">Прекратить</div>
+          <div class="dropdown-item">Обновить</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Кодировка</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Исходный текст</div>
+          <div class="dropdown-item">Во весь экран</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="favorites">
+        Избранное
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Добавить в избранное...</div>
+          <div class="dropdown-item">Упорядочить избранное...</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Ссылки</div>
+          <div class="dropdown-item">MSN.com</div>
+          <div class="dropdown-item">Сведения о продукте</div>
+          <div class="dropdown-item">Часто задаваемые вопросы</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="tools">
+        Сервис
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Почта и новости</div>
+          <div class="dropdown-item">Добавить в избранное</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Синхронизация</div>
+          <div class="separator"></div>
+          <div class="dropdown-item">Свойства обозревателя</div>
+        </div>
+      </div>
+      <div class="menu-item gui-btn" data-menu="help">
+        Справка
+        <div class="dropdown-menu">
+          <div class="dropdown-item">Содержание и указатель</div>
+          <div class="dropdown-item">О программе</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar ie-bar">
+      <div class="toolbar-button gui-btn" id="back-btn"><img src="./img/icons/right-arrow.png"
+          style="transform: rotate(180deg);" alt=""></div>
+      <div class="toolbar-button gui-btn" id="forward-btn"><img src="./img/icons/right-arrow.png" alt=""></div>
+      <div class="toolbar-button gui-btn" id="stop-btn"><img src="./img/icons/msg_error-2.png" alt="stop"></div>
+      <div class="toolbar-button gui-btn" id="refresh-btn"><img src="./img/icons/refresh.png" alt="refresh"></div>
+      <div class="toolbar-button gui-btn" id="home-btn"><img src="./img/icons/home.png" alt="home"></div>
+      <div class="toolbar-button gui-btn" id="search-btn"><img src="./img/icons/world-5.png" alt="Search"></div>
+      <div class="toolbar-button gui-btn" id="favorites-btn"><img src="./img/icons/world_star-1.png" alt="favorites">
+      </div>
+      <div class="toolbar-button gui-btn" id="print-btn"><img src="./img/icons/printer_slim-1.png" alt="printer"></div>
+    </div>
+
+    <div class="address-bar ie-bar">
+      <div class="address-label">Адрес:</div>
+      <input type="text" class="address-input" id="address-input"
+        value="https://web.archive.org/web/1998/https://www.google.com/">
+    </div>
+
+    <div class="content-area ie-bar">
+      <iframe src="https://web.archive.org/web/1998/https://www.google.com/" allowfullscreen="allowfullscreen"
+        sandbox="allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-popups" 
+        allow="camera https://brie.fi;microphone https://brie.fi" id="browser-frame">
+      </iframe>
+    </div>
+
+    <div class="status-bar  ie-bar">
+      <div class="status-text" id="status-text">Готово</div>
+      <div class="status-indicator">Подключено к Интернету <img src="./img/icons/world-5.png" alt="Search"></div>
+    </div>
+  </div>
+
+  <script>
+    const browserFrame = document.getElementById('browser-frame');
+    const addressInput = document.getElementById('address-input');
+    const statusText = document.getElementById('status-text');
+    const refreshBtn = document.getElementById('refresh-btn');
+    const backBtn = document.getElementById('back-btn');
+    const forwardBtn = document.getElementById('forward-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const homeBtn = document.getElementById('home-btn');
+
+    // ToolBTN event listeners
+    refreshBtn.addEventListener('click', function () {
+      statusText.textContent = 'Обновление страницы...';
+      browserFrame.src = 'https://web.archive.org/web/1998/https://www.google.com/';
+      addressInput.value = 'https://web.archive.org/web/1998/https://www.google.com/';
+      setTimeout(() => {
+        statusText.textContent = 'Готово';
+      }, 1000);
+    });
+
+    backBtn.addEventListener('click', function () {
+      statusText.textContent = 'Переход назад...';
+      browserFrame.src = 'https://web.archive.org/web/1998/https://www.google.com/';
+      addressInput.value = 'https://web.archive.org/web/1998/https://www.google.com/';
+      setTimeout(() => {
+        statusText.textContent = 'Готово';
+      }, 1000);
+    });
+    forwardBtn.addEventListener('click', function () {
+      statusText.textContent = 'Переход вперед...';
+      browserFrame.src = 'https://web.archive.org/web/1998/https://www.google.com/';
+      addressInput.value = 'https://web.archive.org/web/1998/https://www.google.com/';
+      setTimeout(() => {
+        statusText.textContent = 'Готово';
+      }, 1000);
+    });
+
+    stopBtn.addEventListener('click', function () {
+      statusText.textContent = 'Остановка загрузки...';
+      browserFrame.src = 'https://web.archive.org/web/1998/https://www.google.com/';
+      addressInput.value = 'https://web.archive.org/web/1998/https://www.google.com/';
+      setTimeout(() => {
+        statusText.textContent = 'Готово';
+      }, 1000);
+    });
+
+    homeBtn.addEventListener('click', function () {
+      statusText.textContent = 'Переход на домашнюю страницу...';
+      browserFrame.src = 'https://web.archive.org/web/1998/https://www.google.com/';
+      addressInput.value = 'https://web.archive.org/web/1998/https://www.google.com/';
+      setTimeout(() => {
+        statusText.textContent = 'Готово';
+      }, 1000);
+    });
+
+    // Address input 
+    addressInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        let url = this.value;
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          url = 'https://' + url;
+        }
+        statusText.textContent = 'Поиск сайта...';
+        browserFrame.src = url;
+        setTimeout(() => {
+          statusText.textContent = 'Готово';
+        }, 1500);
+      }
+    });
+
+    // Dropdown menu event listeners
+    const menuItems = document.querySelectorAll('.menu-item');
+
+    menuItems.forEach(item => {
+      item.addEventListener('mouseenter', function () {
+        // close other active menus
+        menuItems.forEach(otherItem => {
+          if (otherItem !== this) {
+            otherItem.classList.remove('active');
+          }
+        });
+        // Current menu
+        this.classList.add('active');
+      });
+
+      item.addEventListener('mouseleave', function (e) {
+        // Закрываем меню только если курсор ушел за его пределы
+        setTimeout(() => {
+          if (!this.matches(':hover') && !this.querySelector('.dropdown-menu').matches(':hover')) {
+            this.classList.remove('active');
+          }
+        }, 100);
+      });
+    });
+
+    // Dropdown menu item event listeners
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function () {
+        const menuText = this.textContent;
+        statusText.textContent = `Выбрано: ${menuText}`;
+
+        // close menu after select
+        menuItems.forEach(menuItem => {
+          menuItem.classList.remove('active');
+        });
+
+        // Handle specific menu items
+        if (menuText === 'Выход') {
+          if (confirm('Закрыть Internet Explorer?')) {
+            document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#008080;color:white;font-family:Arial;">Internet Explorer закрыт</div>';
+          }
+        } else if (menuText === 'Обновить') {
+          refreshBtn.click();
+        } else if (menuText === 'Прекратить') {
+          stopBtn.click();
+        }
+      });
+    });
+
+    // Toolbar active button visual effects
+    // document.querySelectorAll('.toolbar-button').forEach(button => {
+    //   button.addEventListener('mousedown', function () {
+    //     this.style.border = '1px inset #c0c0c0';
+    //   });
+
+    //   button.addEventListener('mouseup', function () {
+    //     this.style.border = '1px outset #c0c0c0';
+    //   });
+    // });
+
+    // reftash address input after nav
+    // browserFrame.addEventListener('load', function () {
+    //   addressInput.value = browserFrame.contentWindow.location.href;
+    //   statusText.textContent = 'Готово';
+    // });
+  </script>
+</body>
+
+</html>

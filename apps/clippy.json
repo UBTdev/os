@@ -1,0 +1,7 @@
+{
+    "title": "Скрепка AI - Помощник",
+    "content": "<div id='clippy-app-container'></div>",
+    "width": 400,
+    "height": 500,
+    "icon": "img/icons/clippy_icon.png"
+}

@@ -1,0 +1,450 @@
+    :root {
+      --bg: #0d0b1f;
+      --text: #e0e0ff;
+      --accent: #8a2be2;
+      --hp: #ff5555;
+      --energy: #55ff55;
+      --score: #ffff55;
+      /* --gui: rgba(10, 5, 30, 0.85); */
+      --gui: rgb(10, 5, 30);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      height: 100vh;
+      background: var(--bg) url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAFklEQVQoU42OQRfEIAwEMCq8f/rk5gIX+gJqBwY2ggAAAABJRU5ErkJggg==') repeat;
+      font-family: 'Courier New', monospace;
+      image-rendering: pixelated;
+      color: var(--text);
+      /* height: calc(100% - 27px); */
+    }
+
+    #gameContainer {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* === Меню === */
+    #menu {
+      position: absolute;
+      inset: 0;
+      background: rgb(5, 4, 19);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 100;
+    }
+
+    #menu h1 {
+      text-align: center;
+      font-size: 48px;
+      color: #ff55ff;
+      text-shadow: 0 0 10px #ff55ff;
+      image-rendering: pixelated;
+    }
+
+    .btn {
+      padding: 15px 40px;
+      background: #222;
+      border: 4px outset var(--accent);
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.2s;
+      image-rendering: pixelated;
+      background-image: url('./../../img/live-on-credit/2363.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .btn:hover {
+      /* background: #444; */
+      transform: scale(1.05);
+    }
+
+    /* === Игровой экран === */
+    .gui {
+      transition: opacity 0.4s;
+    }
+
+    #guiContainer.gui-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Верхняя панель */
+    #topBar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      gap: 20px;
+      /* height: 60px; */
+      background: var(--gui);
+      border: 4px solid var(--accent);
+      padding: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .stat {
+      background: #111;
+      border: 2px solid;
+      padding: 5px 12px;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    #hpBar {
+      width: 50%;
+      border-color: var(--hp);
+    }
+
+    #energyBar {
+      width: 50%;
+      border-color: var(--energy);
+    }
+
+    #score {
+      width: 100%;
+      border-color: var(--score);
+    }
+
+    #gameTime {
+      font-size: 14px;
+      font-family: 'Press Start 2P', sans-serif;
+      font-size: 12px;
+      font-weight: normal;
+    }
+
+    #hpBar,
+    #energyBar,
+    #score {
+      min-width: 184px;
+      font-family: 'Press Start 2P', sans-serif;
+      font-size: 12px;
+      font-weight: normal;
+    }
+
+    #score {
+      font-size: 10px;
+    }
+
+    /* Дебэфы */
+    #debuffs {
+      position: absolute;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      z-index: 9;
+      top: auto;
+      right: 10px;
+      left: auto;
+      bottom: 220px;
+      position: static;
+      justify-content: end;
+      padding-bottom: 10px;
+      font-family: 'Press Start 2P', sans-serif;
+      overflow: auto;
+      max-height: 50px;
+      /* position: relative; */
+      max-width: 300px;
+      margin: 0 0 0 auto;
+      bottom: 0;
+      padding-left: 10px;
+    }
+
+    .debuff:first-child {
+      margin-top: 15px;
+    }
+
+    .debuff:last-child {
+      margin-bottom: 15px;
+    }
+
+    .debuffs__wrapper {
+      position: relative;
+      margin: 0 0 0 auto;
+      border-radius: 5px;
+      overflow: hidden;
+      /* background: #2b0012; */
+      background: #20002b;
+      border: 2px solid #40006dba;
+      min-height: 54px;
+    }
+
+    .debuffs__title {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      margin-left: 10px;
+    }
+
+    .debuffs__wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      height: 100%;
+      background: #0D0B1F;
+      background: linear-gradient(180deg, #0d0b1f 0%, rgba(255, 255, 255, 0) 50%, #0d0b1f 100%);
+      pointer-events: none;
+    }
+
+    .debuff {
+      /* background: #300; */
+      /* border: 2px solid #f33; */
+      background: #330a00;
+      border: 2px solid #ffa633;
+      padding: 4px 8px;
+      font-size: 10px;
+    }
+
+    /* Диалоговое окно */
+    #dialogue {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      /* height: 220px; */
+      background: var(--gui);
+      outline: 3px solid #330e68;
+      /* border-top: 6px solid var(--accent); */
+      border-top: 6px solid #8a2be294;
+      padding: 10px 20px 20px 20px;
+      z-index: 10;
+      /* outline: 2px solid 6px solid var(--accent); */
+    }
+
+    #speaker {
+      font-family: 'Press Start 2P', sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      color: #ff77ff;
+      margin: 8px 0;
+    }
+
+    #text {
+      height: 80px;
+      overflow: hidden;
+      overflow: auto;
+      border-bottom: 2px solid #8a2be247;
+    }
+
+    #choices {
+      margin-top: 20px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice {
+      background: #222;
+      border: 2px solid var(--accent);
+      padding: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .choice:hover {
+      background: #444;
+    }
+
+    /* Фон и персонаж */
+    #bg {
+      position: absolute;
+      inset: 0;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      image-rendering: pixelated;
+    }
+
+    #character {
+      position: absolute;
+      /* left: 50%; */
+      /* transform: translateX(-50%); */
+      right: 0;
+      bottom: 220px;
+      /* height: 400px; */
+      height: 60%;
+      image-rendering: pixelated;
+      z-index: 1;
+    }
+
+    /* === Модальные окна === */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: var(--modal-bg);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      background: #111;
+      border: 6px double var(--accent);
+      padding: 30px;
+      max-width: 80%;
+      text-align: center;
+      image-rendering: pixelated;
+    }
+
+    .modal-title {
+      font-size: 32px;
+      color: #ff55ff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ff55ff;
+    }
+
+    .modal-text {
+      font-size: 18px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .modal-btn {
+      padding: 12px 30px;
+      background: #222;
+      border: 4px solid var(--accent);
+      cursor: pointer;
+      font-size: 18px;
+      min-width: 120px;
+      transition: 0.2s;
+    }
+
+    .modal-btn:hover {
+      background: #444;
+      transform: translateY(-4px);
+    }
+
+    .modal-btn.red {
+      border-color: #ff5555;
+    }
+
+    .modal-btn.green {
+      border-color: #55ff55;
+    }
+
+    /* #guiContainer .modal-btn {
+      opacity: 1 !important;
+    } */
+
+    .modal-btn.hide-gui-btn {
+      position: absolute;
+      z-index: 99;
+      top: 100px;
+      left: 10px;
+      font-size: 14px;
+      opacity: 0.6;
+    }
+
+    .modal-btn {
+      border: 4px solid #310c426b;
+    }
+
+    .modal-btn:hover {
+      transform: translateY(0px);
+    }
+
+    .modal-btn:active {
+      background: #444;
+      /* transform: translateY(-4px); */
+      transform: scale(0.9);
+      transition: all 0.3s;
+    }
+
+    .topBar__inner {
+      max-width: 420px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .start-btn {
+      border: 4px outset #2be259;
+    }
+
+    .btn {
+      width: 200px;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 780px) {}
+
+    @media screen and (max-width: 580px) {
+      .modal-btn.hide-gui-btn {
+        top: 130px;
+        left: 10px;
+      }
+
+      .debuffs__title {
+        display: none;
+      }
+
+      #debuffs {
+        max-width: 100%;
+      }
+
+      .debuff {
+        padding: 3px 4px;
+        font-size: 8px;
+        text-transform: uppercase;
+        width: 100%;
+      }
+
+
+
+      #hpBar,
+      #energyBar,
+      #score {
+        width: 100%;
+      }
+
+      #character {
+        /* height: 230px; */
+        height: 50%;
+      }
+    }
+
+    @media screen and (max-width: 355px) {
+      .modal-btn.hide-gui-btn {
+        top: 150px;
+        left: 10px;
+        width: calc(100% - 20px);
+        text-align: center;
+      }
+
+
+    }
