@@ -1,8 +1,7 @@
-// api/clippy.js - РАБОЧАЯ ВЕРСИЯ С GEMINI
+// api/clippy.js - ИСПРАВЛЕННАЯ ВЕРСИЯ С ПРАВИЛЬНЫМ ENDPOINT
 export default async function handler(req, res) {
   console.log('=== CLIPPY API CALLED ===');
   
-  // Разрешаем CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -23,23 +22,23 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Question is required' });
     }
 
-    // ПРАВИЛЬНОЕ ИМЯ ПЕРЕМЕННОЙ ОКРУЖЕНИЯ
     const apiKey = process.env.GEMINI_API_KEY;
     console.log('API Key exists:', !!apiKey);
     
     if (!apiKey) {
-      console.log('API key missing in environment');
       return res.status(500).json({ error: 'API key not configured' });
     }
 
     console.log('Making request to Gemini API...');
     
+    // ИСПРАВЛЕННЫЙ ENDPOINT И ЗАГОЛОВОК
     const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-goog-api-key': apiKey  // ← ПРАВИЛЬНЫЙ ЗАГОЛОВОК
         },
         body: JSON.stringify({
           contents: [{
@@ -67,19 +66,20 @@ export default async function handler(req, res) {
       console.error('Gemini API error:', errorText);
       return res.status(500).json({ 
         error: 'Gemini API error',
+        status: geminiResponse.status,
         details: errorText
       });
     }
 
     const data = await geminiResponse.json();
-    console.log('Gemini response data:', data);
+    console.log('Gemini response received');
     
     if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
       throw new Error('Invalid response format from Gemini');
     }
 
     let text = data.candidates[0].content.parts[0].text;
-    console.log('Original Gemini response:', text);
+    console.log('Original response:', text);
 
     // Убедимся, что ответ начинается с [clip]
     if (!text.startsWith('[clip]')) {
@@ -90,9 +90,9 @@ export default async function handler(req, res) {
     return res.status(200).json({ answer: text });
     
   } catch (error) {
-    console.error('CLIPPY API ERROR:', error);
+    console.error('CLIPPY API ERROR:', error.message);
     return res.status(500).json({ 
-      error: 'Internal server error',
+      error: 'AI service unavailable',
       message: error.message
     });
   }
