@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req, res) {
+  // Разрешаем CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -20,9 +21,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Question is required' });
     }
 
+    // Получаем API ключ из environment variables
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      throw new Error('API key not configured');
+      return res.status(500).json({ error: 'API key not configured' });
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -36,15 +38,17 @@ export default async function handler(req, res) {
     const response = await result.response;
     let text = response.text();
 
+    // Убедимся, что ответ начинается с [clip]
     if (!text.startsWith('[clip]')) {
       text = '[clip] ' + text;
     }
 
-    res.status(200).json({ answer: text });
+    console.log('AI Response success');
+    return res.status(200).json({ answer: text });
     
   } catch (error) {
     console.error('AI Error:', error.message);
-    res.status(500).json({ 
+    return res.status(500).json({ 
       error: 'AI service unavailable',
       message: error.message 
     });
