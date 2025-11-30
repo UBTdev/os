@@ -1226,77 +1226,55 @@ class ClippyAI {
 
     // stop method talk with AI
     async ask(question) {
-        this.messages.push({ role: "user", content: question });
+    this.messages.push({ role: "user", content: question });
 
-        // CHEK COMMAND BEFORE CALL AI
-        const command = this.parseCommand(question);
-        if (command) {
-            const result = await command.action();
-            this.messages.push({ role: "assistant", content: result });
-            return result;
-        }
-
-        // GEMINI API
-        try {
-            const response = await fetch(`${this.apiUrl}?key=${this.apiKey}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    contents: [
-                        {
-                            parts: [
-                                {
-                                    text: `Ты - Скрепка из Microsoft Office 97. Ты немного наивная, энергичная и очень любишь помогать. 
-                  Используй фразы вроде "Похоже, вы пишете письмо!", "Ой-ой!", "Могу я помочь?". 
-                  Отвечай кратко - 1-2 предложения. Всегда начинай ответ с "[clip]". 
-                  Говори только на русском.
-                  
-                  Контекст: пользователь работает в операционной системе ArokenOS (симулятор Windows 98).
-                  
-                  Вопрос пользователя: ${question}`
-                                }
-                            ]
-                        }
-                    ],
-                    generationConfig: {
-                        temperature: 0.7,
-                        maxOutputTokens: 150,
-                        topP: 0.8,
-                        topK: 40
-                    }
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${await response.text()}`);
-            }
-
-            const data = await response.json();
-
-            let answer = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-            if (!answer) {
-                throw new Error("Пустой ответ от API");
-            }
-
-
-            if (!answer.startsWith('[clip]')) {
-                answer = '[clip] ' + answer;
-            }
-
-            this.messages.push({ role: "assistant", content: answer });
-            return answer;
-
-        } catch (error) {
-            console.warn("Gemini API ошибка, используем локальный ответ:", error);
-
-            // LOCAL INTELLECT 
-            const localResponse = this.localAI(question);
-            return localResponse || this.getFallback();
-        }
+    // CHEK COMMAND BEFORE CALL AI
+    const command = this.parseCommand(question);
+    if (command) {
+        const result = await command.action();
+        this.messages.push({ role: "assistant", content: result });
+        return result;
     }
+
+    // VERCEL API ←--- НОВАЯ ЧАСТЬ
+    try {
+        const response = await fetch('https://os-mu-one.vercel.app/api/clippy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        let answer = data.answer;
+
+        if (!answer) {
+            throw new Error("Пустой ответ от API");
+        }
+
+        if (!answer.startsWith('[clip]')) {
+            answer = '[clip] ' + answer;
+        }
+
+        this.messages.push({ role: "assistant", content: answer });
+        return answer;
+
+    } catch (error) {
+        console.warn("Vercel API ошибка, используем локальный ответ:", error);
+        const localResponse = this.localAI(question);
+        return localResponse || this.getFallback();
+    }
+}
 
     // LOCAL INTELLECT FOR BASE RESPONSES
     localAI(question) {
