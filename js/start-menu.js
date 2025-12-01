@@ -1,4 +1,4 @@
-// Управление меню Пуск
+// start menu controls
 let startMenuOpen = false;
 
 function toggleStartMenu() {
@@ -16,7 +16,7 @@ function toggleStartMenu() {
   }
 }
 
-// Закрытие меню при клике вне его
+// close start menu
 document.addEventListener('click', function (event) {
 
   const startMenu = document.getElementById('startMenu');
