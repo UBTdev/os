@@ -90,7 +90,7 @@
 
     <div class="content-area ie-bar">
       <div class="photo-grid" id="photo-grid">
-        <!-- Фотографии будут добавлены через JavaScript -->
+
       </div>
     </div>
 
@@ -101,7 +101,7 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script>
-    // Данные фотографий с реальными URL для демонстрации
+
     const photos = [
       { id: 1, name: "Жизнь в кредит", description: "Жизнь в кредит", href: "./img/img-folder-app/5222217930702439830.jpg" },
       { id: 2, name: "Твои старые дедлайны", description: "Твои старые дедлайны", href: "./img/icons/html-2.png" },
@@ -111,7 +111,7 @@
       { id: 6, name: "Список Займодавцев.TXT", description: "Список Займодавцев.TXT", href: "./img/icons/notepad_file-2.png" }
     ];
 
-    // Элементы DOM
+
     const photoGrid = document.getElementById('photo-grid');
     const addressInput = document.getElementById('address-input');
     const statusText = document.getElementById('status-text');
@@ -122,14 +122,14 @@
 
     let selectedPhotos = [];
 
-    // Инициализация GLightbox с элементами галереи
+
     const lightbox = GLightbox({
       touchNavigation: true,
       loop: true,
       autoplayVideos: false
     });
 
-    // Функция для отображения фотографий
+
     function renderPhotos() {
       photoGrid.innerHTML = '';
 
@@ -138,10 +138,10 @@
         photoItem.className = 'photo-item';
         photoItem.dataset.id = photo.id;
 
-        // Создаем миниатюру для фотографии
+
         const thumbnail = document.createElement('img');
         thumbnail.className = 'icon';
-        thumbnail.src = photo.href; // Используем тот же URL что и для полноразмерного
+        thumbnail.src = photo.href; 
         thumbnail.alt = photo.description;
 
         const photoName = document.createElement('div');
@@ -151,10 +151,9 @@
         photoItem.appendChild(thumbnail);
         photoItem.appendChild(photoName);
 
-        // Обработчик выбора фотографии
+  
         photoItem.addEventListener('click', (e) => {
           if (e.ctrlKey) {
-            // Множественный выбор с Ctrl
             const index = selectedPhotos.indexOf(photo.id);
             if (index > -1) {
               selectedPhotos.splice(index, 1);
@@ -164,7 +163,6 @@
               photoItem.classList.add('selected');
             }
           } else {
-            // Одиночный выбор
             document.querySelectorAll('.photo-item').forEach(item => {
               item.classList.remove('selected');
             });
@@ -201,12 +199,11 @@
       updateStatus();
     }
 
-    // Обновление статусной строки
     function updateStatus() {
       statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
     }
 
-    // Обработчики кнопок
+
     refreshBtn.addEventListener('click', function () {
       statusText.textContent = 'Обновление...';
       setTimeout(() => {
@@ -237,7 +234,7 @@
       }, 500);
     });
 
-    // Обработка ввода адреса
+
     addressInput.addEventListener('keypress', function (e) {
       if (e.key === 'Enter') {
         statusText.textContent = 'Переход по адресу...';
@@ -247,23 +244,23 @@
       }
     });
 
-    // Обработчики для выпадающих меню
+
     const menuItems = document.querySelectorAll('.menu-item');
 
     menuItems.forEach(item => {
       item.addEventListener('mouseenter', function () {
-        // Закрываем другие открытые меню
+
         menuItems.forEach(otherItem => {
           if (otherItem !== this) {
             otherItem.classList.remove('active');
           }
         });
-        // Открываем текущее меню
+
         this.classList.add('active');
       });
 
       item.addEventListener('mouseleave', function (e) {
-        // Закрываем меню только если курсор ушел за его пределы
+
         setTimeout(() => {
           if (!this.matches(':hover') && !this.querySelector('.dropdown-menu').matches(':hover')) {
             this.classList.remove('active');
@@ -272,18 +269,18 @@
       });
     });
 
-    // Обработчики для элементов выпадающих меню
+
     document.querySelectorAll('.dropdown-item').forEach(item => {
       item.addEventListener('click', function () {
         const menuText = this.textContent;
         statusText.textContent = `Выбрано: ${menuText}`;
 
-        // Закрываем все меню после выбора
+
         menuItems.forEach(menuItem => {
           menuItem.classList.remove('active');
         });
 
-        // Обработка конкретных пунктов меню
+
         if (menuText === 'Выход') {
           if (confirm('Закрыть обозреватель?')) {
             document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;color:white;font-family:Arial;">Обозреватель закрыт</div>';
@@ -298,7 +295,7 @@
       });
     });
 
-    // Инициализация
+
     renderPhotos();
   </script>
   <!-- grid-template-columns: repeat(auto-fill, 70px);
