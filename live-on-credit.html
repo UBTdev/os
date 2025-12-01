@@ -11,14 +11,14 @@
 <body>
 
   <div id="gameContainer">
-    <!-- Меню -->
+
     <div id="menu">
       <h1>Жизнь в кредит</h1>
       <!-- <div class="menu__gui-wrapper">
       </div> -->
       <div
         style="max-width:300px; max-height:300px; background:#222; border:4px outset #8a2be2; image-rendering:pixelated;">
-        <!-- сюда вставишь свою картинку персонажа -->
+
         <img id="titleChar" src="./img/live-on-credit/gameCbg.png" style="width:100%;height:100%;object-fit:contain;">
       </div>
       <div class="btn start-btn" onclick="startGame()">PLAY</div>
@@ -26,12 +26,12 @@
       <div class="btn" onclick="openSettings()">SETTINGS</div>
     </div>
 
-    <!-- Игровой экран -->
+
     <img id="bg"
       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
     <img id="character" src="">
 
-    <!-- GUI -->
+
     <div id="guiContainer" class="gui" style="display:none;">
       <div id="topBar">
         <div class="topBar__inner">
@@ -120,7 +120,7 @@
     </div>
   </div>
 
-  <!-- Звуки -->
+
   <audio id="typeSound"
     src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="></audio>
   <audio id="choiceSound"
@@ -147,9 +147,9 @@
     let timerInterval = null;
     let typeInterval = null;
 
-    // ======================== Система диалогов ========================
+    // ======================== dialogi ========================
     const story = {
-      // ======================== НАЧАЛО ========================
+      // ======================== start ========================
       start: {
         bg: "./img/live-on-credit/startBG.jpg",
         char: "./img/live-on-credit/ArokenAvatar.png",
@@ -188,7 +188,7 @@
 
       // 75 60
 
-      // ======================== ПЛОХАЯ ВЕТКА: ОСТАТЬСЯ НА СКЛАДЕ ========================
+      // ======================== BADEND ========================
       eternal_warehouse: {
         bg: "./img/live-on-credit/storageBG.png",
         // char: "images/chars/max_old.png",
@@ -197,7 +197,7 @@
         choices: [{ text: "Начать заново", action: () => resetGame() }]
       },
 
-      // ======================== ОСНОВНОЙ ПУТЬ: ФРИЛАНС ========================
+      // ======================== MAIN WAY ========================
       first_kwork: {
         bg: "./img/live-on-credit/desktop.jpg",
         char: "./img/live-on-credit/maksWOW.png",
@@ -236,7 +236,7 @@
 
       // 50 85
 
-      // ======================== ЛОВУШКА ВЫГОРАНИЯ ========================
+      // ======================== burnout1 ========================
       burnout_trap: {
         bg: "./img/live-on-credit/csgobg.jpg",
         char: "./img/live-on-credit/maksWHTCH.png",
@@ -257,7 +257,7 @@
         choices: [{ text: "Начать заново", action: () => resetGame() }]
       },
 
-      // ======================== ПЕРЕЗАГРУЗКА И РОСТ ========================
+      // ======================== Relocation ========================
       // en 60 hp 85
       reboot_path: {
         bg: "./img/live-on-credit/relocation.jpg",
@@ -289,7 +289,7 @@
         ]
       },
 
-      // ======================== КОНЦОВКИ ========================
+      // ======================== end ========================
       lazzy_work: {
         bg: "./img/live-on-credit/sytyicat.jpg",
         char: "./img/live-on-credit/maksSAD.png",
@@ -323,7 +323,7 @@
         choices: [{ text: "Вы прошли игру с хорошей концовкой", action: () => resetGame() }]
       },
 
-      // Стандартная победа (если вдруг кто-то наберёт 300к другим путём)
+  
       victory: {
         bg: "./img/live-on-credit/happyteambg.jpg",
         char: "./img/live-on-credit/happyMax.png",
@@ -331,7 +331,7 @@
         choices: [{ text: "Вы прошли игру с хорошей концовкой", action: () => resetGame() }]
       }
     };
-    // ======================== Основные функции ========================
+    // ======================== main func ========================
     function loadGame() {
       const saved = localStorage.getItem("codeAndCredit_save");
       if (saved) {
@@ -377,14 +377,14 @@
 
       const node = story[nodeId];
 
-      // фон и персонаж
+      // bg and character
       document.getElementById("bg").src = node.bg || "images/bg/default.png";
       document.getElementById("character").src = node.char || "";
 
-      // спикер
+      // speeker
       document.getElementById("speaker").textContent = node.speaker || "";
 
-      // текст с анимацией
+      // animation text
       const textEl = document.getElementById("text");
       textEl.textContent = "";
       clearInterval(typeInterval);
@@ -398,7 +398,7 @@
         } else clearInterval(typeInterval);
       }, 30);
 
-      // выборы
+      // selection
       const choicesDiv = document.getElementById("choices");
       choicesDiv.innerHTML = "";
 
@@ -409,7 +409,7 @@
         div.onclick = () => {
           playSound("choice");
 
-          // эффекты
+          // effects
           if (ch.hp) state.hp = Math.max(0, state.hp + ch.hp);
           if (ch.energy) state.energy = Math.max(0, state.energy + ch.energy);
           if (ch.score) state.score += ch.score;
@@ -419,7 +419,7 @@
           if (ch.action) ch.action();
           else goTo(ch.next || "start");
 
-          // проверки смерти
+          // game over
           if (state.hp <= 0 || state.energy <= 0) goTo("gameOver");
           // if (state.score >= state.debt) goTo("victory");
         };
@@ -430,7 +430,7 @@
       if (node.onEnter) node.onEnter();
     }
 
-    // ======================== Вспомогательные ========================
+    // ======================== stats ========================
     function updateStats() {
       document.getElementById("hpBar").textContent = `HP ${state.hp}/${state.maxHp}`;
       document.getElementById("energyBar").textContent = `Энергия ${state.energy}/${state.maxEnergy}`;
@@ -438,19 +438,18 @@
     }
 
     function addDebuff(name, turns) {
-      // Проверяем, есть ли уже дебафф с таким именем
       const exists = state.debuffs.some(debuff => debuff.name === name);
 
       if (!exists) {
         state.debuffs.push({ name, turns });
         renderDebuffs();
-        saveGame(); // важно! сохраняем, чтобы после перезагрузки не добавился заново
+        saveGame(); 
       }
-      // Если уже есть — можно обновить количество ходов (опционально):
+
       else {
         const existing = state.debuffs.find(d => d.name === name);
         if (existing && turns > existing.turns) {
-          existing.turns = turns; // обновляем, если новый срок дольше
+          existing.turns = turns; 
           renderDebuffs();
           saveGame();
         }
@@ -476,8 +475,8 @@
       if (sounds[type]) sounds[type].play().catch(() => { });
     }
 
-    // ======================== Настройки и README ========================
-    // === НОВЫЕ функции для модалок ===
+    // ======================== settings & README ========================
+
     function closeModal(id) {
       document.getElementById(id).classList.remove('active');
     }
@@ -491,7 +490,7 @@
       openModal('modalReadme');
     }
 
-    // Настройки
+    // settings
     function openSettings() {
       openModal('modalSettings');
     }
@@ -511,14 +510,14 @@
       openModal('modalClearConfirm');
     }
 
-    // Автозагрузка с красивым вопросом
+    // autoload
     window.onload = () => {
       if (localStorage.getItem("codeAndCredit_save")) {
         openModal('modalContinue');
       }
     };
 
-    // Переопределяем resetGame, чтобы закрывались модалки
+    
     function resetGame() {
       localStorage.removeItem("codeAndCredit_save");
       document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
