@@ -89,7 +89,6 @@
 
     <div class="content-area ie-bar">
       <div class="photo-grid" id="photo-grid">
-        <!-- Фотографии будут добавлены через JavaScript -->
       </div>
     </div>
 
@@ -100,7 +99,6 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script>
-    // Данные фотографий с реальными URL для демонстрации
     const photos = [
       { id: 1, name: "Новая платформа", description: "Новая платформа", href: "./img/img-folder-app/5438206905395838482.jpg" },
       { id: 2, name: "Дебаты АйТишные-3", description: "Дебаты АйТишные-3", href: "./img/img-folder-app/5354842002497334724.jpg" },
@@ -147,7 +145,7 @@
       { id: 43, name: "Что? Сегодня стрим в 21:00", description: "Что? Сегодня стрим в 21:00", href: "./img/img-folder-app/775438538409690346.jpg" }
     ];
 
-    // Элементы DOM
+    //  DOM elements
     const photoGrid = document.getElementById('photo-grid');
     const addressInput = document.getElementById('address-input');
     const statusText = document.getElementById('status-text');
@@ -158,14 +156,14 @@
 
     let selectedPhotos = [];
 
-    // Инициализация GLightbox с элементами галереи
+    // GLightbox init
     const lightbox = GLightbox({
       touchNavigation: true,
       loop: true,
       autoplayVideos: false
     });
 
-    // Функция для отображения фотографий
+    // gallery view
     function renderPhotos() {
       photoGrid.innerHTML = '';
 
@@ -174,10 +172,10 @@
         photoItem.className = 'photo-item';
         photoItem.dataset.id = photo.id;
 
-        // Создаем миниатюру для фотографии
+        // thumb
         const thumbnail = document.createElement('img');
         thumbnail.className = 'icon';
-        thumbnail.src = photo.href; // Используем тот же URL что и для полноразмерного
+        thumbnail.src = photo.href; 
         thumbnail.alt = photo.description;
 
         const photoName = document.createElement('div');
@@ -187,10 +185,10 @@
         photoItem.appendChild(thumbnail);
         photoItem.appendChild(photoName);
 
-        // Обработчик выбора фотографии
+        // photo select
         photoItem.addEventListener('click', (e) => {
           if (e.ctrlKey) {
-            // Множественный выбор с Ctrl
+            // select with ctrl
             const index = selectedPhotos.indexOf(photo.id);
             if (index > -1) {
               selectedPhotos.splice(index, 1);
@@ -200,7 +198,7 @@
               photoItem.classList.add('selected');
             }
           } else {
-            // Одиночный выбор
+            // single select
             document.querySelectorAll('.photo-item').forEach(item => {
               item.classList.remove('selected');
             });
@@ -211,22 +209,21 @@
           updateStatus();
         });
 
-        // Двойной клик для открытия фотографии в lightbox
+        // duble click 
         photoItem.addEventListener('dblclick', () => {
           statusText.textContent = `Открытие: ${photo.name}`;
 
-          // Создаем элементы галереи для GLightbox
           const galleryItems = photos.map(p => ({
-            href: p.href, // Используем тот же URL что и для миниатюр
+            href: p.href, 
             type: 'image',
             title: p.description,
             // description: `Файл: ${p.name}`
           }));
 
-          // Находим индекс текущей фотографии
+          // photo current index
           const currentIndex = photos.findIndex(p => p.id === photo.id);
 
-          // Открываем lightbox на текущем элементе
+          // lightbox open 
           lightbox.setElements(galleryItems);
           lightbox.openAt(currentIndex);
         });
@@ -237,12 +234,12 @@
       updateStatus();
     }
 
-    // Обновление статусной строки
+
     function updateStatus() {
       statusText.textContent = `Выбрано объектов: ${selectedPhotos.length}`;
     }
 
-    // Обработчики кнопок
+
     refreshBtn.addEventListener('click', function () {
       statusText.textContent = 'Обновление...';
       setTimeout(() => {
@@ -273,7 +270,7 @@
       }, 500);
     });
 
-    // Обработка ввода адреса
+
     addressInput.addEventListener('keypress', function (e) {
       if (e.key === 'Enter') {
         statusText.textContent = 'Переход по адресу...';
@@ -283,23 +280,23 @@
       }
     });
 
-    // Обработчики для выпадающих меню
+
     const menuItems = document.querySelectorAll('.menu-item');
 
     menuItems.forEach(item => {
       item.addEventListener('mouseenter', function () {
-        // Закрываем другие открытые меню
+  
         menuItems.forEach(otherItem => {
           if (otherItem !== this) {
             otherItem.classList.remove('active');
           }
         });
-        // Открываем текущее меню
+ 
         this.classList.add('active');
       });
 
       item.addEventListener('mouseleave', function (e) {
-        // Закрываем меню только если курсор ушел за его пределы
+
         setTimeout(() => {
           if (!this.matches(':hover') && !this.querySelector('.dropdown-menu').matches(':hover')) {
             this.classList.remove('active');
@@ -308,18 +305,18 @@
       });
     });
 
-    // Обработчики для элементов выпадающих меню
+
     document.querySelectorAll('.dropdown-item').forEach(item => {
       item.addEventListener('click', function () {
         const menuText = this.textContent;
         statusText.textContent = `Выбрано: ${menuText}`;
 
-        // Закрываем все меню после выбора
+
         menuItems.forEach(menuItem => {
           menuItem.classList.remove('active');
         });
 
-        // Обработка конкретных пунктов меню
+
         if (menuText === 'Выход') {
           if (confirm('Закрыть обозреватель?')) {
             document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;color:white;font-family:Arial;">Обозреватель закрыт</div>';
@@ -334,7 +331,7 @@
       });
     });
 
-    // Инициализация
+
     renderPhotos();
   </script>
   <!-- grid-template-columns: repeat(auto-fill, 70px);
